@@ -4,5 +4,5 @@ file to make dependencies a bit easier to manage.
 
 Included are the following:
 
-- progBar
+- progBar  
 ..* Prints a progress bar to stdout (inspired by this SO post: http://stackoverflow.com/questions/3002085/python-to-print-out-status-bar-and-percentage). Give it the current step (t) and the toal number of steps (N), and it will print a continuously updating progress bar.
