@@ -40,9 +40,9 @@ def loadMNIST(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False):
     Y_te = np.zeros((Y_test.shape[0], len(digits)))
 
     for i in range(0, len(digits)):
-      Y_tr[np.where(Y_train==d), i] = 1
-      Y_va[np.where(Y_valid==d), i] = 1
-      Y_te[np.where(Y_test==d), i] = 1
+      Y_tr[np.where(Y_train==digits[i]), i] = 1
+      Y_va[np.where(Y_valid==digits[i]), i] = 1
+      Y_te[np.where(Y_test==digits[i]), i] = 1
 
   else:
     Y_tr = Y_train
