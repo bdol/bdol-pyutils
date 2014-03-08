@@ -24,14 +24,14 @@ def loadMNIST(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False):
   Y_test  = test[1]
 
   # Eliminate unused digits
-  for d in range(0, 9):
+  for d in range(0, 10):
     if d not in digits:
-      X_train = np.delete(X_train, np.where(Y_train==d), 0)
-      Y_train = np.delete(Y_train, np.where(Y_train==d), 0)
-      X_valid = np.delete(X_valid, np.where(Y_valid==d), 0)
-      Y_valid = np.delete(Y_valid, np.where(Y_valid==d), 0)
-      X_test = np.delete(X_test, np.where(Y_test==d), 0)
-      Y_test = np.delete(Y_test, np.where(Y_test==d), 0)
+      X_train = np.delete(X_train, np.where(Y_train==d)[0], 0)
+      Y_train = np.delete(Y_train, np.where(Y_train==d)[0], 0)
+      X_valid = np.delete(X_valid, np.where(Y_valid==d)[0], 0)
+      Y_valid = np.delete(Y_valid, np.where(Y_valid==d)[0], 0)
+      X_test = np.delete(X_test, np.where(Y_test==d)[0], 0)
+      Y_test = np.delete(Y_test, np.where(Y_test==d)[0], 0)
 
   # Transform labels to bit vectors for use in multilayer perceptrons
   if asBitVector:
@@ -42,7 +42,7 @@ def loadMNIST(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False):
     for d in digits:
       Y_tr[np.where(Y_train==d), d] = 1
       Y_va[np.where(Y_valid==d), d] = 1
-      Y_te[np.where(Y_te==d), d] = 1
+      Y_te[np.where(Y_test==d), d] = 1
 
   else:
     Y_tr = Y_train
