@@ -7,7 +7,7 @@ def progBar(t, N, length=20, barChar='=', headChar='>'):
   formatStr = '[%-'+str(length)+'s] %d%% (%d/%d)'
   sys.stdout.write(formatStr %
       (barChar*int(float(t)/float(N)*length)+headChar, 
-        float(t)/float(N)*100, t, N))
+        np.ceil(float(t)/float(N)*100), t, N))
   sys.stdout.flush()
 
 def loadMNIST(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False):
