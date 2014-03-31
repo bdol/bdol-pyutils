@@ -10,7 +10,8 @@ def progBar(t, N, length=20, barChar='=', headChar='>'):
         np.ceil(float(t)/float(N)*100), t, N))
   sys.stdout.flush()
 
-def loadMNIST(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False):
+def loadMNIST(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False,
+    asInt=False):
   print "Loading MNIST data for digits "+str(digits)+"... ",
   sys.stdout.flush()
   
@@ -49,6 +50,10 @@ def loadMNIST(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False):
     Y_va = Y_valid
     Y_te = Y_test
 
+  if asInt:
+    X_train = (255.0*X_train).astype(int)
+    X_valid = (255.0*X_valid).astype(int)
+    X_test = (255.0*X_test).astype(int)
 
   print "Done!"
   return X_train, Y_tr, X_valid, Y_va, X_test, Y_te
