@@ -10,11 +10,50 @@ def progBar(t, N, length=20, barChar='=', headChar='>'):
         np.ceil(float(t)/float(N)*100), t, N))
   sys.stdout.flush()
 
+def loadMNISTnp(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False,
+    asInt=False):
+  print "Loading MNIST data for digits "+str(digits)+"... ",
+  sys.stdout.flush()
+
+  mnist = np.load(path)
+  X_train = mnist['train_data']
+  Y_train = mnist['train_labels']
+  X_test = mnist['test_data']
+  Y_test = mnist['test_labels']
+  
+  # Eliminate unused digits
+  for d in range(0, 10):
+    if d not in digits:
+      X_train = np.delete(X_train, np.where(Y_train==d)[0], 0)
+      Y_train = np.delete(Y_train, np.where(Y_train==d)[0], 0)
+      X_test = np.delete(X_test, np.where(Y_test==d)[0], 0)
+      Y_test = np.delete(Y_test, np.where(Y_test==d)[0], 0)
+
+  # Transform labels to bit vectors for use in multilayer perceptrons
+  if asBitVector:
+    Y_tr = np.zeros((Y_train.shape[0], len(digits)))
+    Y_te = np.zeros((Y_test.shape[0], len(digits)))
+
+    for i in range(0, len(digits)):
+      Y_tr[np.where(Y_train==digits[i]), i] = 1
+      Y_te[np.where(Y_test==digits[i]), i] = 1
+
+  else:
+    Y_tr = Y_train
+    Y_te = Y_test
+
+  if asInt:
+    X_train = (255.0*X_train).astype(int)
+    X_test = (255.0*X_test).astype(int)
+
+  print "Done!"
+  return X_train, Y_tr, X_test, Y_te
+
 def loadMNIST(path, digits=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], asBitVector=False,
     asInt=False):
   print "Loading MNIST data for digits "+str(digits)+"... ",
   sys.stdout.flush()
-  
+
   train, valid, test = cPickle.load(open(path, "rb"))
 
   X_train = train[0]
